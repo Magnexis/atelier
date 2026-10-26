@@ -4,6 +4,9 @@
 
 Atelier is a new Magnexis project. It is deliberately not a clone of Framer, shadcn/ui, Radix UI, or any other product. It occupies the productive gap between those categories: a local visual workspace that produces an inspectable design contract, plus a small package developers can adopt incrementally.
 
+**Live Studio:** <https://atelier-vite-preview-20261026.netlify.app><br>
+**Source:** <https://github.com/Magnexis/atelier>
+
 The project currently includes a polished local Studio landing and workbench experience, a framework-light token package, a small React surface, local export behavior, and a deliberately simple static-server workflow. It does **not** claim to be a complete hosted page builder, component registry, Figma plugin, design-file format, or replacement for an established accessibility primitive library. Those are future systems, not marketing copy.
 
 ## Why Atelier exists
@@ -87,9 +90,9 @@ The Studio is a real Vite + React application. It has a normal local development
 
 ## MCP discovery endpoint
 
-The deployed Studio exposes a public, read-only Streamable HTTP MCP endpoint at `/mcp`. It is intentionally limited to catalog and release discovery: `list_components`, `get_component`, and `get_release_notes`. It has no account data, write tools, user data, or secrets.
+The deployed Studio includes a read-only Streamable HTTP MCP endpoint at `https://atelier-vite-preview-20261026.netlify.app/mcp`. It is intentionally limited to catalog and release discovery: `list_components`, `get_component`, and `get_release_notes`. It has no account data, write tools, user data, or secrets. The current Netlify visitor-access policy must be changed to **Public** before external MCP clients can reach it.
 
-For a native MCP client, connect to `https://<your-atelier-site>/mcp` using Streamable HTTP. The endpoint accepts `POST` and returns JSON; it also supports browser preflight for public catalog tooling. The Netlify function rate-limits requests to 60 per minute per IP.
+For a native MCP client, connect to `https://atelier-vite-preview-20261026.netlify.app/mcp` using Streamable HTTP. The endpoint accepts `POST` and returns JSON; it also supports browser preflight for public catalog tooling. The Netlify function rate-limits requests to 60 per minute per IP.
 
 ## Run locally
 
@@ -120,10 +123,12 @@ pnpm check
 
 ## Use the package in an application
 
-At launch, Atelier is intended to be consumed from a Git tag or JSR—not npm. The source package can be added directly from a tagged GitHub release:
+At launch, Atelier is intended to be consumed from source or JSR—not npm. Clone the repository when working from source:
 
 ```bash
-pnpm add github:magnexis/atelier-ui#v0.1.0
+git clone https://github.com/Magnexis/atelier.git
+cd atelier
+pnpm install
 ```
 
 When the public JSR package exists, the equivalent will be `jsr:@magnexis/atelier`. Neither distribution route requires an npm account.
@@ -364,9 +369,9 @@ This is a baseline, not a certification. Manual keyboard and assistive-technolog
 
 ## Publishing and deployment
 
-This repository is intentionally local-only right now. No domain has been configured, no package has been published, and no hosting provider is required.
+The Studio has a deployed Netlify production URL, but no custom domain is configured. The repository is hosted under the Magnexis organization. JSR validation has passed locally; the registry release remains pending a verified `@magnexis` JSR publisher session.
 
-When deployment is requested later, Netlify, Vercel, Cloudflare Pages, GitHub Pages, or another static host can serve `apps/studio` after an explicit build/deployment decision. Publishing `@magnexis/atelier` similarly requires a package audit, license confirmation, README/package metadata review, semantic version decision, and explicit user authorization. None of those external changes are performed by the current project.
+The Studio does not require Netlify or a domain for local use. Publishing a package remains a deliberate release action and requires a package audit, license confirmation, package metadata review, semantic version decision, and an authenticated registry publisher.
 
 ## Limitations
 

@@ -14,7 +14,7 @@ const components = [
   { name: "Command Ledger", kind: "Utility", states: ["Ready", "Empty", "Grouped"], note: "Command discovery that records scope and local execution context." },
 ];
 const code = {
-  workspace: "# add Atelier as a Git workspace dependency\npnpm add github:magnexis/atelier-ui#v0.1.0\n\n# or reference the local package during development",
+  workspace: "# clone the source-owned workspace\ngit clone https://github.com/Magnexis/atelier.git\ncd atelier && pnpm install\n\n# then import from packages/atelier during development",
   jsr: "# planned JSR package (after scope reservation)\ndeno add @magnexis/atelier\n\n# JSR publishes ESM source and generated docs",
   use: "import { SignalToggle, LedgerField } from '@magnexis/atelier';\n\nexport function SyncScope() {\n  return <SignalToggle leftLabel=\"Local\" rightLabel=\"Share\" />;\n}",
 };

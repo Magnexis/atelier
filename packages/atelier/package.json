@@ -2,6 +2,12 @@
   "name": "@magnexis/atelier",
   "version": "0.1.0",
   "description": "Portable accessible UI primitives and design tokens for React.",
+  "homepage": "https://atelier-vite-preview-20261026.netlify.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Magnexis/atelier.git",
+    "directory": "packages/atelier"
+  },
   "type": "module",
   "sideEffects": ["./styles.css", "./signal.css"],
   "exports": {
