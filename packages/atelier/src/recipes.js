@@ -4,6 +4,14 @@
  */
 export const recipes = Object.freeze([
   Object.freeze({
+    id: "local-command-review",
+    name: "Local command review",
+    category: "workflow",
+    components: Object.freeze(["CommandLedger", "SegmentedControl", "Disclosure"]),
+    states: Object.freeze(["ready", "filtered", "empty"]),
+    accessibility: Object.freeze(["search-label", "radio-group", "native-disclosure"]),
+  }),
+  Object.freeze({
     id: "signal-ledger",
     name: "Signal ledger",
     category: "local-state",

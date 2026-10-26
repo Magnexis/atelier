@@ -35,6 +35,9 @@ export function SignalToggle(props: SignalToggleProps): unknown;
 export function Stack(props: BaseProps & { as?: string; gap?: 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8; style?: Record<string, string> }): unknown;
 export function Tabs(props: BaseProps & { label?: string }): unknown;
 export function VisuallyHidden(props: BaseProps): unknown;
+export function Disclosure(props: BaseProps & { defaultOpen?: boolean; onToggle?: (open: boolean) => void; summary: string }): unknown;
+export function SegmentedControl(props: BaseProps & { defaultValue?: string; label: string; onValueChange?: (value: string) => void; options: ReadonlyArray<{ label: string; value: string }>; value?: string }): unknown;
+export function CommandLedger(props: BaseProps & { commands: ReadonlyArray<{ id: string; label: string; description?: string; onSelect?: () => void }>; label?: string; placeholder?: string }): unknown;
 
 export interface Recipe {
   readonly id: string;

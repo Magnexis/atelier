@@ -6,6 +6,7 @@ Atelier is a new Magnexis project. It is deliberately not a clone of Framer, sha
 
 **Live Studio:** <https://atelier-vite-preview-20261026.netlify.app><br>
 **Source:** <https://github.com/Magnexis/atelier>
+**JSR package:** <https://jsr.io/@magnexis/atelier>
 
 The project currently includes a polished local Studio landing and workbench experience, a framework-light token package, a small React surface, local export behavior, and a deliberately simple static-server workflow. It does **not** claim to be a complete hosted page builder, component registry, Figma plugin, design-file format, or replacement for an established accessibility primitive library. Those are future systems, not marketing copy.
 
@@ -46,7 +47,7 @@ The included local Studio demonstrates the intended product interaction model:
 - Keyboard-accessible command palette (`Ctrl/Cmd + K`).
 - Copyable installation, token, and component snippets.
 - Local JSON export of the current sample design contract.
-- Clear local-only status: it neither connects to an account nor claims a public URL.
+- Clear local-first behavior: editing remains in-browser and does not require an account or backend.
 
 The initial package at `packages/atelier` exports:
 
@@ -58,6 +59,9 @@ The initial package at `packages/atelier` exports:
 - `Tabs`: an explicitly labelled tab-list wrapper; a future headless adapter will add roving-focus behavior.
 - `recipes`: portable composition metadata for profile settings, deployment health, and payment workflows.
 - `SignalToggle`, `LedgerField`, and `MarginNote`: Atelier’s original Signal Ledger primitives for source-aware local and shared state.
+- `Disclosure`: a native expand/collapse surface with optional open-state reporting.
+- `SegmentedControl`: a compact radio group with arrow, Home, and End keyboard behavior.
+- `CommandLedger`: a filterable, callback-driven local command surface that never executes shell input.
 - `Stack`: a small layout composition primitive.
 - `VisuallyHidden`: a text utility for assistive technology labels.
 - `@magnexis/atelier/styles.css`: baseline CSS variables and styles for the shipped primitives.
@@ -131,7 +135,11 @@ cd atelier
 pnpm install
 ```
 
-The stable package is available now as `jsr:@magnexis/atelier` (currently `1.0.0`). Neither distribution route requires an npm account.
+The stable package is available now as `jsr:@magnexis/atelier` (currently `1.1.0`). Neither distribution route requires an npm account.
+
+```bash
+deno add jsr:@magnexis/atelier
+```
 
 Import the global design contract once at your application root:
 
@@ -178,6 +186,9 @@ export function PublishChanges({ onPublish }) {
 | Tabs | Labelled tab-list wrapper | Roving focus, selected-panel linkage, controlled state |
 | Recipes | Portable metadata and dependency declarations | Schema validation and deterministic source templates |
 | Signal Ledger | Source-aware state, fields, and annotations | Keyboard interaction and browser-level contract tests |
+| Disclosure | Native details/summary semantics and optional state reporting | Controlled-state adapter and browser-level contract tests |
+| SegmentedControl | Radio semantics and directional keyboard navigation | Disabled options and form serialization contract |
+| CommandLedger | Local filtering and explicit consumer callbacks | Virtualization and shortcut conflict policy |
 
 No component is presented as complete merely because it renders. The catalog makes variants visible today; behavior contracts and interaction tests are the standard for subsequent package releases.
 
@@ -296,7 +307,7 @@ The roadmap is organized by dependencies rather than marketing milestones.
 - [x] Initial React primitives with peer dependencies.
 - [x] Built-in test runner and parse checks.
 - [x] Clear local-only development path.
-- [ ] Package build pipeline and publish metadata review.
+- [x] JSR package metadata, GitHub OIDC publishing, and signed release workflow.
 - [ ] Versioned `atelier.config.json` manifest.
 
 ### Phase 2 — Project-backed Studio

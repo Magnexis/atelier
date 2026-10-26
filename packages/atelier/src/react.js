@@ -70,3 +70,31 @@ export function Stack({ as: Tag = "div", gap = 3, className, style, ...props }) 
 }
 
 export function VisuallyHidden(props) { return React.createElement("span", { className: "at-visually-hidden", ...props }); }
+
+/** A small native disclosure surface. It preserves browser keyboard behavior and can report open-state changes. */
+export function Disclosure({ children, className, defaultOpen = false, onToggle, summary, ...props }) {
+  return React.createElement("details", { className: cx("at-disclosure", className), defaultOpen, onToggle: (event) => onToggle?.(event.currentTarget.open), ...props }, React.createElement("summary", null, summary), React.createElement("div", { className: "at-disclosure__content" }, children));
+}
+
+/** A keyboard-operable choice group for a small fixed set of mutually exclusive options. */
+export function SegmentedControl({ className, defaultValue, label, onValueChange, options, value }) {
+  const [internal, setInternal] = React.useState(defaultValue ?? options[0]?.value);
+  const selected = value ?? internal;
+  const choose = (next) => { if (value === undefined) setInternal(next); onValueChange?.(next); };
+  const move = (event, index) => {
+    const keys = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1, Home: -index, End: options.length - index - 1 };
+    if (!(event.key in keys)) return;
+    event.preventDefault();
+    const next = (index + keys[event.key] + options.length) % options.length;
+    choose(options[next].value);
+    event.currentTarget.parentElement?.querySelectorAll("button")[next]?.focus();
+  };
+  return React.createElement("div", { className: cx("at-segmented-control", className), role: "radiogroup", "aria-label": label }, options.map((option, index) => React.createElement("button", { key: option.value, type: "button", role: "radio", "aria-checked": option.value === selected, className: option.value === selected ? "is-selected" : "", onClick: () => choose(option.value), onKeyDown: (event) => move(event, index) }, option.label)));
+}
+
+/** Search and invoke a consumer-owned list of local commands. It never persists searches or executes shell commands. */
+export function CommandLedger({ className, commands, label = "Command ledger", placeholder = "Search local commands" }) {
+  const [query, setQuery] = React.useState("");
+  const matches = commands.filter((command) => `${command.label} ${command.description ?? ""}`.toLowerCase().includes(query.toLowerCase()));
+  return React.createElement("section", { className: cx("at-command-ledger", className), "aria-label": label }, React.createElement("label", null, React.createElement(VisuallyHidden, null, label), React.createElement("input", { value: query, onChange: (event) => setQuery(event.target.value), placeholder, type: "search" })), React.createElement("ul", null, matches.map((command) => React.createElement("li", { key: command.id }, React.createElement("button", { type: "button", onClick: () => command.onSelect?.() }, React.createElement("span", null, command.label), command.description && React.createElement("small", null, command.description))))), matches.length === 0 && React.createElement("p", { role: "status" }, "No local commands match this query."));
+}
