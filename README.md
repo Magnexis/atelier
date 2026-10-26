@@ -4,7 +4,7 @@
 
 Atelier is a new Magnexis project. It is deliberately not a clone of Framer, shadcn/ui, Radix UI, or any other product. It occupies the productive gap between those categories: a local visual workspace that produces an inspectable design contract, plus a small package developers can adopt incrementally.
 
-**Live Studio:** <https://atelier-vite-preview-20261026.netlify.app><br>
+**Netlify production address:** <https://atelier-vite-preview-20261026.netlify.app><br>
 **Source:** <https://github.com/Magnexis/atelier>
 **JSR package:** <https://jsr.io/@magnexis/atelier>
 
