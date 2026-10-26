@@ -1,48 +1,13 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Atelier is a local-first design language and component studio." />
-  <title>Atelier — A design runtime for products</title>
-  <link rel="stylesheet" href="./styles.css" />
-</head>
-<body>
-  <a class="skip-link" href="#main">Skip to content</a>
-  <header class="site-header">
-    <a class="brand" href="#top" aria-label="Atelier home"><span class="brand-mark">A</span> atelier<span class="brand-sub">/ magnexis</span></a>
-    <nav aria-label="Primary navigation"><a href="#system">System</a><a href="#components">Components</a><a href="#workflow">Workflow</a><a href="#package">Package</a></nav>
-    <div class="header-actions"><button class="icon-button" data-command aria-label="Open command menu">⌘K</button><button class="theme-button" data-theme aria-pressed="false">Dark</button></div>
-  </header>
-  <main id="main">
-    <section class="hero" id="top">
-      <div class="eyebrow"><span></span> Local-first design infrastructure</div>
-      <h1>Interfaces deserve a <em>runtime,</em><br />not another kit.</h1>
-      <p class="hero-copy">Atelier combines a visual studio, an inspectable token system, and accessible React primitives. Design decisions remain in your repository—portable, versioned, and yours.</p>
-      <div class="hero-actions"><a class="button button--dark" href="#package">Install the package <span>→</span></a><a class="text-link" href="#system">Explore the system <span>↓</span></a></div>
-      <p class="availability"><i></i> Studio runs locally · no account, cloud, or domain required</p>
-    </section>
-    <section class="studio-shell" aria-label="Interactive Atelier studio preview">
-      <aside class="studio-sidebar"><div class="studio-file active">◇ Overview</div><div class="studio-file">▣ Foundations</div><div class="studio-file">◫ Components</div><div class="studio-file">↗ Motion</div><div class="studio-file">⌘ Recipes</div><div class="sidebar-label">COLLECTION</div><div class="studio-file">◌ Workbench</div><div class="studio-file">◌ Commerce</div><div class="new-collection">+ New collection</div></aside>
-      <div class="studio-main">
-        <div class="studio-bar"><div class="crumb">Library <b>/</b> Workbench</div><div class="view-switch" role="group" aria-label="Preview mode"><button class="selected" data-view="desktop">Desktop</button><button data-view="mobile">Mobile</button></div><button class="export-button" data-export>Export JSON</button></div>
-        <div class="canvas-wrap"><div class="canvas-grid"><div class="canvas-note">Edited locally · <span data-change-count>0</span> changes</div><article class="product-preview" data-preview><div class="preview-nav"><b>northstar</b><span>Products　Changelog　About</span><button>Talk to us</button></div><div class="preview-content"><p>Operations platform</p><h2>Make the system<br />feel <i>simple.</i></h2><div class="preview-row"><span>Collaborative processes,<br />clear outcomes.</span><button>Explore workspace ↗</button></div></div><div class="metric-strip"><div><strong>98.6%</strong><span>reliable operations</span></div><div><strong>12m</strong><span>mean time to clarity</span></div><div><strong>34</strong><span>connected systems</span></div></div></article><div class="selection-outline" aria-hidden="true"><span>Hero / Heading</span></div></div></div>
-        <div class="inspector"><div><label>Accent color</label><div class="swatches" role="radiogroup" aria-label="Accent color"><button class="swatch blue selected" data-accent="#285de6" aria-label="Blue"></button><button class="swatch orange" data-accent="#f15a24" aria-label="Orange"></button><button class="swatch green" data-accent="#187a5a" aria-label="Green"></button><button class="swatch violet" data-accent="#7655d6" aria-label="Violet"></button></div></div><div><label>Density</label><input type="range" min="0" max="2" value="1" data-density aria-label="Preview density" /></div><div class="inspector-status"><span>●</span> Validated for contrast</div></div>
-      </div>
-    </section>
-    <section class="principles" id="system"><div class="section-intro"><p class="section-number">01 / THE SYSTEM</p><h2>One source of truth,<br />three ways to work.</h2></div><div class="principle-list"><article><span>01</span><div><h3>Compose</h3><p>Headless, keyboard-complete primitives that let product teams build their own language—without rebuilding hard interaction logic.</p></div><em>Foundation</em></article><article><span>02</span><div><h3>Calibrate</h3><p>Tokens are named decisions, not values hidden inside components. Tune a system in the Studio and export a versioned contract.</p></div><em>Control</em></article><article><span>03</span><div><h3>Ship</h3><p>Copy a recipe, install the package, or consume a registry. The rendered output and the source code stay aligned.</p></div><em>Ownership</em></article></div></section>
-    <section class="component-section" id="components"><div class="section-heading"><p class="section-number">02 / COMPONENT WORKBENCH</p><h2>Useful by default.<br />Specific when you need it.</h2><p>Every part has a documented behavior contract, accessible states, and an explicit escape hatch.</p></div><div class="component-grid"><article class="component-card"><div class="card-head"><span>Button</span><code>at/button</code></div><div class="button-demo"><button class="demo-button primary">Continue <span>→</span></button><button class="demo-button quiet">Cancel</button><button class="demo-button icon">+</button></div><div class="component-meta"><span>Variants: 3</span><span>Focus-safe</span></div></article><article class="component-card"><div class="card-head"><span>Command Menu</span><code>at/command</code></div><div class="command-demo"><div>⌕ <span>Jump to anything…</span><kbd>⌘ K</kbd></div><p>RECENT</p><button>▱　Design system <small>↵</small></button><button>◇　Component recipes <small>↵</small></button></div><div class="component-meta"><span>Typeahead</span><span>Keyboard-first</span></div></article><article class="component-card"><div class="card-head"><span>Notice</span><code>at/notice</code></div><div class="notice-demo"><b>Release candidate ready</b><p>14 components passed their contract checks.</p><button>Review changes →</button></div><div class="component-meta"><span>Live region ready</span><span>Dismissible</span></div></article></div></section>
-    <section class="workflow" id="workflow"><div><p class="section-number">03 / A DIFFERENT WORKFLOW</p><h2>Designing and building are no longer separate handoffs.</h2><p>Atelier treats the interface as source material. Teams can work visually, in code, or both—each change resolves to the same portable design contract.</p><a class="text-link" href="#package">See the package anatomy <span>→</span></a></div><ol><li><span>1</span><strong>Define</strong><p>Establish semantic color, type, spacing, motion, and layout tokens.</p></li><li><span>2</span><strong>Prototype</strong><p>Assemble responsive, interactive patterns in the local Studio.</p></li><li><span>3</span><strong>Commit</strong><p>Export portable tokens and components to the repository you already own.</p></li><li><span>4</span><strong>Validate</strong><p>Run behavior and accessibility contracts alongside your application tests.</p></li></ol></section>
-    <section class="package-section" id="package"><div class="package-copy"><p class="section-number">04 / THE PACKAGE</p><h2>A design language your repository can understand.</h2><p>Atelier is framework-light. The base package contains tokens and a small React layer. More involved interactions are composed from first-party recipes, not opaque generated bundles.</p><ul><li><span>✓</span> ESM package with explicit exports</li><li><span>✓</span> React is a peer dependency, never bundled</li><li><span>✓</span> CSS custom properties for any stack</li><li><span>✓</span> Contract-first testing model</li></ul></div><div class="code-panel"><div class="code-tabs"><button class="active" data-code-tab="install">Install</button><button data-code-tab="tokens">Tokens</button><button data-code-tab="use">Use</button><button class="copy-code" data-copy>Copy</button></div><pre><code data-code-output>npm install @magnexis/atelier
-
-# Then import the global design contract:
-import "@magnexis/atelier/styles.css";</code></pre><div class="code-foot">package: @magnexis/atelier <span>MIT</span></div></div></section>
-    <section class="comparison"><div><p class="section-number">POSITIONING, NOT IMITATION</p><h2>Built for the space<br />between canvas and code.</h2></div><div class="comparison-table" role="table" aria-label="Atelier positioning comparison"><div role="row" class="table-head"><span role="columnheader">Capability</span><span role="columnheader">Visual builders</span><span role="columnheader">Code kits</span><span role="columnheader">Atelier</span></div><div role="row"><span>Local-first studio</span><span>Varies</span><span>—</span><b>Included</b></div><div role="row"><span>Source-owned tokens</span><span>Limited</span><span>Included</span><b>Included</b></div><div role="row"><span>Accessible behavior contracts</span><span>Varies</span><span>Varies</span><b>Included</b></div><div role="row"><span>Composable primitives</span><span>Limited</span><span>Included</span><b>Included</b></div></div></section>
-    <section class="closing"><p>Start with a local canvas.<br />Leave with a system that is yours.</p><a class="button button--light" href="#package">Read the local docs <span>→</span></a></section>
-  </main>
-  <footer><a class="brand" href="#top"><span class="brand-mark">A</span> atelier</a><p>Made as original, local-first UI infrastructure by Magnexis.</p><div><a href="#system">System</a><a href="#components">Components</a><a href="#package">Package</a></div></footer>
-  <dialog class="command-palette" data-palette><form method="dialog"><input autofocus placeholder="Search Atelier…" aria-label="Search Atelier" /><button value="cancel" aria-label="Close command menu">×</button></form><p>QUICK LINKS</p><a href="#components">◇ Browse components <kbd>↵</kbd></a><a href="#package">▣ Package docs <kbd>↵</kbd></a><a href="#workflow">↗ Workflow <kbd>↵</kbd></a></dialog>
-  <div class="toast" role="status" aria-live="polite" data-toast></div>
-  <script src="./app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Atelier is a local-first design language and component studio." />
+    <title>Atelier — Local-first design runtime</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>

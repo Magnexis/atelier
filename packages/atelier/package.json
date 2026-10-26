@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "Portable accessible UI primitives and design tokens for React.",
   "type": "module",
-  "sideEffects": ["./styles.css"],
+  "sideEffects": ["./styles.css", "./signal.css"],
   "exports": {
     ".": "./src/index.js",
     "./styles.css": "./styles.css",
+    "./signal.css": "./signal.css",
     "./tokens": "./src/tokens.js"
   },
   "peerDependencies": { "react": ">=18.2.0", "react-dom": ">=18.2.0" },

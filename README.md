@@ -50,6 +50,11 @@ The initial package at `packages/atelier` exports:
 - `tokens`: a frozen JavaScript representation of foundational design decisions.
 - `tokenCss(scope)`: a small utility to emit the base CSS variable contract into an explicit scope.
 - `Button`: a React button with accessible native semantics, focus styling, and three visual variants.
+- `Field`: a labelled native input with description and error relationships.
+- `Notice`: a status or critical-alert primitive with semantic live-region defaults.
+- `Tabs`: an explicitly labelled tab-list wrapper; a future headless adapter will add roving-focus behavior.
+- `recipes`: portable composition metadata for profile settings, deployment health, and payment workflows.
+- `SignalToggle`, `LedgerField`, and `MarginNote`: Atelier’s original Signal Ledger primitives for source-aware local and shared state.
 - `Stack`: a small layout composition primitive.
 - `VisuallyHidden`: a text utility for assistive technology labels.
 - `@magnexis/atelier/styles.css`: baseline CSS variables and styles for the shipped primitives.
@@ -59,10 +64,11 @@ The initial package at `packages/atelier` exports:
 ```text
 atelier-ui/
 ├── apps/
-│   └── studio/                 # Local static experience and interactive workbench
+│   └── studio/                 # Vite application root, React Workbench, and shared styling
 │       ├── index.html
-│       ├── app.js
-│       └── styles.css
+│       ├── src/main.jsx         # React application entry point
+│       ├── src/studio.css       # Studio-specific component styling
+│       └── styles.css           # Shared visual tokens and page styling
 ├── packages/
 │   └── atelier/                # Publishable framework-light package
 │       ├── src/
@@ -72,13 +78,18 @@ atelier-ui/
 │       ├── test/
 │       ├── styles.css
 │       └── package.json
-├── tools/
-│   └── serve.mjs               # Minimal safe local static server
+├── vite.config.js               # Vite build and dev-server configuration
 ├── package.json
 └── README.md
 ```
 
-The Studio has no build step in its current form. This keeps the local experience usable on a clean machine with only a current Node.js runtime. The package has React declared as a peer dependency rather than bundling it, so it can join an application without creating another React runtime.
+The Studio is a real Vite + React application. It has a normal local development server and production build, while the package keeps React declared as a peer dependency so it can join an application without creating another React runtime.
+
+## MCP discovery endpoint
+
+The deployed Studio exposes a public, read-only Streamable HTTP MCP endpoint at `/mcp`. It is intentionally limited to catalog and release discovery: `list_components`, `get_component`, and `get_release_notes`. It has no account data, write tools, user data, or secrets.
+
+For a native MCP client, connect to `https://<your-atelier-site>/mcp` using Streamable HTTP. The endpoint accepts `POST` and returns JSON; it also supports browser preflight for public catalog tooling. The Netlify function rate-limits requests to 60 per minute per IP.
 
 ## Run locally
 
@@ -90,29 +101,32 @@ The Studio has no build step in its current form. This keeps the local experienc
 ### Start the Studio
 
 ```bash
-npm run serve
+pnpm install
+pnpm dev
 ```
 
-Then open the local URL printed by the command, normally `http://127.0.0.1:4173`.
+Then open the local URL printed by Vite, normally `http://127.0.0.1:5173`.
 
-The server is intentionally bound to loopback (`127.0.0.1`). It does not expose the Studio to the local network. Stop it with `Ctrl+C` when you are finished.
+The development server is intentionally bound to loopback (`127.0.0.1`). It does not expose the Studio to the local network. Stop it with `Ctrl+C` when you are finished.
 
 ### Verify the package and Studio JavaScript
 
 ```bash
-npm test
-npm run check
+pnpm test
+pnpm check
 ```
 
-`npm test` runs the token contract tests using Node’s built-in test runner. `npm run check` parses the Studio JavaScript and public package entry point. The static HTML and CSS require no dependency installation to serve.
+`pnpm test` runs the token contract tests using Node’s built-in test runner. `pnpm check` runs the Vite production build and parses the public package entry point.
 
 ## Use the package in an application
 
-When the package is published to a registry, its intended consumer workflow is:
+At launch, Atelier is intended to be consumed from a Git tag or JSR—not npm. The source package can be added directly from a tagged GitHub release:
 
 ```bash
-npm install @magnexis/atelier
+pnpm add github:magnexis/atelier-ui#v0.1.0
 ```
+
+When the public JSR package exists, the equivalent will be `jsr:@magnexis/atelier`. Neither distribution route requires an npm account.
 
 Import the global design contract once at your application root:
 
@@ -148,6 +162,19 @@ export function PublishChanges({ onPublish }) {
   );
 }
 ```
+
+### Current component maturity
+
+| Component | Shipped now | Important next requirement |
+| --- | --- | --- |
+| Button | Native semantics, variants, visible focus | Loading and icon-only accessible-name tests |
+| Field | Label, description, invalid/error wiring | Textarea/select adapters and interaction tests |
+| Notice | Status/alert semantics and intent variants | Dismissible action pattern with focus-return guidance |
+| Tabs | Labelled tab-list wrapper | Roving focus, selected-panel linkage, controlled state |
+| Recipes | Portable metadata and dependency declarations | Schema validation and deterministic source templates |
+| Signal Ledger | Source-aware state, fields, and annotations | Keyboard interaction and browser-level contract tests |
+
+No component is presented as complete merely because it renders. The catalog makes variants visible today; behavior contracts and interaction tests are the standard for subsequent package releases.
 
 The package uses standard DOM semantics. `Button` renders a native `<button>`, preserves consumer event handlers, defaults to `type="button"` to avoid accidental form submissions, and exposes the variants `primary`, `secondary`, and `ghost`. If an app needs a link, use a native anchor or a router link rather than overloading a button with navigation behavior.
 
@@ -245,9 +272,9 @@ The Studio does not yet persist a real project or produce a complete component r
                        └─────────────────────┘
 ```
 
-### Why static first?
+### Why Vite + React?
 
-The initial Studio is static by design. It lets the project prove an interaction model, visual direction, local run story, and package boundary without claiming that an account, CMS, backend, collaboration service, or visual-to-code compiler already exists. That is a more honest base for a real product than a polished screen full of nonfunctional controls.
+The Studio is intentionally a small Vite + React application rather than a hosted builder wrapper. Vite gives it a real development/build lifecycle; React gives the Workbench and catalog durable state, variants, modals, filtering, export controls, and keyboard interactions. This proves a useful product interaction model without pretending that an account, CMS, backend, collaboration service, or visual-to-code compiler already exists.
 
 ### Why a small package first?
 

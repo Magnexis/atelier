@@ -26,6 +26,21 @@ This wedge has three user promises:
 2. The result is inspectable source data—tokens, recipes, and component contracts—not a locked editor document.
 3. A product team can adopt it in layers: tokens only, package primitives, local Studio, then optional collaboration.
 
+## Design-language decision: Signal Ledger
+
+Atelier should not compete by accumulating the same Button, Card, Input, Badge, and Dialog treatment found in every component catalog. Its differentiator is **visible state provenance**: important UI controls reveal where a decision lives, what it will affect, and whether it has crossed from local work into a shared context.
+
+The first original family is Signal Ledger:
+
+| Primitive | Interaction signature | Why it is distinct |
+| --- | --- | --- |
+| Signal Toggle | A state bead travels across a labelled local/share track; the control exposes time and scope. | It makes state transition and data provenance legible instead of concealing both in a generic switch. |
+| Ledger Field | Namespace prefix, field value, provenance, and validation form one visible unit. | It makes configuration feel like a reviewable source record, not an anonymous text box. |
+| Margin Note | Feedback remains adjacent to the decision it describes. | It avoids the disruptive full-width toast/alert pattern while retaining accessible status semantics. |
+| Compound Action | Intent, editable verb, and consequence stay visible through execution. | It connects design actions to user control and local-first policy. |
+
+This is not an attempt to replace the strengths of the competitors. Framer’s canvas is a hosted visual production environment. shadcn/ui’s key advantage is editable source distribution. Radix’s key advantage is deep, unstyled interaction behavior. Atelier should borrow none of their brand expression; it should combine local visual calibration, source ownership, and provenance-aware product controls.
+
 The first release should be judged on whether a small product team can set up a consistent visual system, use it in a React application, inspect its contract, and commit it to Git. It should not be judged on imitation of a mature all-in-one hosted builder.
 
 ## Structural parity, adapted—not copied

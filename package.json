@@ -1,13 +1,28 @@
 {
   "name": "atelier-ui",
   "private": true,
+  "type": "module",
   "version": "0.1.0",
+  "packageManager": "pnpm@10.0.0",
   "description": "A local-first design language and component runtime by Magnexis.",
-  "workspaces": ["packages/*"],
+  "workspaces": [
+    "packages/*"
+  ],
   "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
     "test": "node --test packages/atelier/test/*.test.mjs",
-    "check": "node --check apps/studio/app.js && node --check packages/atelier/src/index.js",
-    "serve": "node tools/serve.mjs"
+    "check": "npm run build && node --check packages/atelier/src/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.32.2",
+    "@netlify/functions": "^6.0.3",
+    "@vitejs/plugin-react": "latest",
+    "react": "latest",
+    "react-dom": "latest",
+    "vite": "latest",
+    "zod": "^4.6.7"
   },
   "license": "MIT"
 }

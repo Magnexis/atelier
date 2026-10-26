@@ -20,7 +20,7 @@ This choice respects the current constraints: no npm account, a local-first prod
 
 ## Why GitHub Pages first
 
-The current Studio is a static local site with `index.html`, CSS, and browser-local JavaScript. GitHub Pages can publish static files from a repository and supports configuring a source folder or Actions workflow. It is therefore a very small transition from the current buildless Studio. The public repository must not contain secrets, customer data, unpublished credentials, or private design materials.
+The current Studio is a Vite + React application that produces static files with `npm run build`. GitHub Pages can publish static build artifacts from a repository and supports configuring a source folder or Actions workflow. It is therefore a small transition from the current Studio. The public repository must not contain secrets, customer data, unpublished credentials, or private design materials.
 
 Suggested future repository setup:
 
