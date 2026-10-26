@@ -1,0 +1,18 @@
+const body = document.body;
+const toast = document.querySelector('[data-toast]');
+const palette = document.querySelector('[data-palette]');
+const preview = document.querySelector('[data-preview]');
+const changeCount = document.querySelector('[data-change-count]');
+let changes = 0;
+const announce = (message) => { toast.textContent = message; toast.classList.add('show'); window.setTimeout(() => toast.classList.remove('show'), 2200); };
+const changed = () => { changes += 1; changeCount.textContent = changes; };
+document.querySelector('[data-theme]').addEventListener('click', (event) => { body.classList.toggle('dark'); const dark = body.classList.contains('dark'); event.currentTarget.textContent = dark ? 'Light' : 'Dark'; event.currentTarget.setAttribute('aria-pressed', String(dark)); });
+document.querySelector('[data-command]').addEventListener('click', () => palette.showModal());
+document.addEventListener('keydown', (event) => { if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') { event.preventDefault(); palette.open ? palette.close() : palette.showModal(); } });
+document.querySelectorAll('[data-view]').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('[data-view]').forEach((item) => item.classList.remove('selected')); button.classList.add('selected'); preview.classList.toggle('mobile', button.dataset.view === 'mobile'); changed(); }));
+document.querySelectorAll('[data-accent]').forEach((button) => button.addEventListener('click', () => { document.documentElement.style.setProperty('--accent', button.dataset.accent); document.querySelectorAll('[data-accent]').forEach((item) => item.classList.remove('selected')); button.classList.add('selected'); changed(); }));
+document.querySelector('[data-density]').addEventListener('input', (event) => { preview.style.transform = `scale(${[.91, 1, 1.09][event.target.value]})`; changed(); });
+const snippets = {install:'npm install @magnexis/atelier\n\n# Then import the global design contract:\nimport "@magnexis/atelier/styles.css";',tokens:'import { tokens, tokenCss } from "@magnexis/atelier/tokens";\n\nconst css = tokenCss(":root");\nconsole.log(tokens.color.accent);',use:'import { Button, Stack } from "@magnexis/atelier";\n\nexport function SavePanel() {\n  return <Stack gap={4}><Button>Save changes</Button></Stack>;\n}'};
+document.querySelectorAll('[data-code-tab]').forEach((button) => button.addEventListener('click', () => { document.querySelectorAll('[data-code-tab]').forEach((item) => item.classList.remove('active')); button.classList.add('active'); document.querySelector('[data-code-output]').textContent = snippets[button.dataset.codeTab]; }));
+document.querySelector('[data-copy]').addEventListener('click', async () => { try { await navigator.clipboard.writeText(document.querySelector('[data-code-output]').textContent); announce('Code copied to clipboard'); } catch { announce('Select the code to copy it'); } });
+document.querySelector('[data-export]').addEventListener('click', () => { const payload = JSON.stringify({name:'northstar', accent:getComputedStyle(document.documentElement).getPropertyValue('--accent').trim(), changes, exportedAt:new Date().toISOString()}, null, 2); const blob = new Blob([payload], {type:'application/json'}); const link = Object.assign(document.createElement('a'), {href:URL.createObjectURL(blob),download:'atelier-workbench.tokens.json'}); link.click(); URL.revokeObjectURL(link.href); announce('Token contract exported'); });

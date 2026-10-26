@@ -1,0 +1,359 @@
+# Atelier
+
+> A local-first design runtime for teams that want the speed of a visual studio, the ownership of a source library, and the behavioral rigor of accessible primitives.
+
+Atelier is a new Magnexis project. It is deliberately not a clone of Framer, shadcn/ui, Radix UI, or any other product. It occupies the productive gap between those categories: a local visual workspace that produces an inspectable design contract, plus a small package developers can adopt incrementally.
+
+The project currently includes a polished local Studio landing and workbench experience, a framework-light token package, a small React surface, local export behavior, and a deliberately simple static-server workflow. It does **not** claim to be a complete hosted page builder, component registry, Figma plugin, design-file format, or replacement for an established accessibility primitive library. Those are future systems, not marketing copy.
+
+## Why Atelier exists
+
+Product teams regularly lose design intent as work crosses boundaries. A visual editor can make iteration delightful but can obscure the implementation behind a platform. A component kit can give teams source ownership but leaves visual calibration as a laborious code-only task. A low-level primitive library can correctly solve focus management and keyboard interaction, but it intentionally does not tell a team what its product should feel like.
+
+Atelier treats the design system as a runtime contract between all three modes of work.
+
+1. **Studio mode** is a local, inspectable place to compose and calibrate an interface.
+2. **Contract mode** serializes decisions such as semantic color, type, rhythm, density, and motion into source-owned tokens.
+3. **Package mode** gives application code a stable way to consume those decisions through CSS variables and small framework adapters.
+
+The key principle is simple: visual work must be able to become source material without forcing teams to give up control of their repository, deployment, or runtime.
+
+## Product position
+
+Atelier takes useful lessons from the current UI-tool landscape without borrowing protected names, source code, visual identity, assets, layout, or wording.
+
+| Category | Valuable pattern | Atelier interpretation |
+| --- | --- | --- |
+| Visual site builders | Fast, direct editing on an editable canvas | A local Studio for composing a real design contract; no hosted deployment required for core work |
+| Copyable component libraries | Source ownership and direct customization | Explicit package exports and recipes designed to live in a team repository |
+| Accessible primitives | Composable parts, keyboard behavior, focus management | Behavior contracts are a first-class roadmap item; the current package begins with simpler primitives |
+| Token systems | A shared vocabulary for design decisions | Tokens are versionable CSS-variable contracts rather than hidden implementation values |
+
+This is positioning, not a compatibility guarantee. Atelier is not affiliated with the projects above and does not import, scrape, replicate, or depend on their proprietary services.
+
+## Current capabilities
+
+The included local Studio demonstrates the intended product interaction model:
+
+- A responsive design-workbench surface rather than a generic marketing card grid.
+- Desktop/mobile preview switching.
+- Accent-color calibration that updates the preview and retains an editable change count.
+- Density tuning for the preview.
+- Dark/light appearance switch with reduced-motion support.
+- Keyboard-accessible command palette (`Ctrl/Cmd + K`).
+- Copyable installation, token, and component snippets.
+- Local JSON export of the current sample design contract.
+- Clear local-only status: it neither connects to an account nor claims a public URL.
+
+The initial package at `packages/atelier` exports:
+
+- `tokens`: a frozen JavaScript representation of foundational design decisions.
+- `tokenCss(scope)`: a small utility to emit the base CSS variable contract into an explicit scope.
+- `Button`: a React button with accessible native semantics, focus styling, and three visual variants.
+- `Stack`: a small layout composition primitive.
+- `VisuallyHidden`: a text utility for assistive technology labels.
+- `@magnexis/atelier/styles.css`: baseline CSS variables and styles for the shipped primitives.
+
+## Repository layout
+
+```text
+atelier-ui/
+├── apps/
+│   └── studio/                 # Local static experience and interactive workbench
+│       ├── index.html
+│       ├── app.js
+│       └── styles.css
+├── packages/
+│   └── atelier/                # Publishable framework-light package
+│       ├── src/
+│       │   ├── index.js
+│       │   ├── react.js
+│       │   └── tokens.js
+│       ├── test/
+│       ├── styles.css
+│       └── package.json
+├── tools/
+│   └── serve.mjs               # Minimal safe local static server
+├── package.json
+└── README.md
+```
+
+The Studio has no build step in its current form. This keeps the local experience usable on a clean machine with only a current Node.js runtime. The package has React declared as a peer dependency rather than bundling it, so it can join an application without creating another React runtime.
+
+## Run locally
+
+### Prerequisites
+
+- Node.js 20 or newer is recommended.
+- No account, API key, domain, database, or cloud service is required.
+
+### Start the Studio
+
+```bash
+npm run serve
+```
+
+Then open the local URL printed by the command, normally `http://127.0.0.1:4173`.
+
+The server is intentionally bound to loopback (`127.0.0.1`). It does not expose the Studio to the local network. Stop it with `Ctrl+C` when you are finished.
+
+### Verify the package and Studio JavaScript
+
+```bash
+npm test
+npm run check
+```
+
+`npm test` runs the token contract tests using Node’s built-in test runner. `npm run check` parses the Studio JavaScript and public package entry point. The static HTML and CSS require no dependency installation to serve.
+
+## Use the package in an application
+
+When the package is published to a registry, its intended consumer workflow is:
+
+```bash
+npm install @magnexis/atelier
+```
+
+Import the global design contract once at your application root:
+
+```js
+import "@magnexis/atelier/styles.css";
+```
+
+Use tokens wherever a runtime value is useful:
+
+```js
+import { tokenCss, tokens } from "@magnexis/atelier/tokens";
+
+document.adoptedStyleSheets = [
+  new CSSStyleSheet(),
+];
+
+console.log(tokens.color.accent); // #285de6
+console.log(tokenCss(".product-theme"));
+```
+
+For React, consume the narrow component layer directly:
+
+```jsx
+import { Button, Stack } from "@magnexis/atelier";
+import "@magnexis/atelier/styles.css";
+
+export function PublishChanges({ onPublish }) {
+  return (
+    <Stack gap={4}>
+      <Button onClick={onPublish}>Publish changes</Button>
+      <Button variant="secondary">Save draft</Button>
+    </Stack>
+  );
+}
+```
+
+The package uses standard DOM semantics. `Button` renders a native `<button>`, preserves consumer event handlers, defaults to `type="button"` to avoid accidental form submissions, and exposes the variants `primary`, `secondary`, and `ghost`. If an app needs a link, use a native anchor or a router link rather than overloading a button with navigation behavior.
+
+## Token contract
+
+Atelier tokens are decisions with stable names. Values are intentionally modest at this stage, but the naming model has a purpose: applications should consume semantic roles rather than hard-code visual values throughout product code.
+
+```js
+import { tokens } from "@magnexis/atelier/tokens";
+
+tokens.color.canvas;
+tokens.color.surface;
+tokens.color.ink;
+tokens.color.muted;
+tokens.color.line;
+tokens.color.accent;
+tokens.color.critical;
+
+tokens.radius.sm;
+tokens.radius.md;
+tokens.radius.lg;
+tokens.radius.pill;
+
+tokens.space[1];
+tokens.space[8];
+```
+
+### Token design rules
+
+1. Prefer a token when it expresses a product decision that should be shared.
+2. Do not create a token for a one-off layout correction without evidence that it will recur.
+3. Name by intent (`accent`, `surface`, `critical`) rather than by paint (`blue500`, `gray2`) at the application boundary.
+4. Maintain a clear mapping between Studio controls and exported token names.
+5. Treat a renamed or removed public token as a breaking change.
+6. Keep layout geometry distinct from visual styling. Components should not decide page structure.
+7. Validate contrast combinations in both light and dark themes before publishing a theme contract.
+
+## Design language principles
+
+### 1. Decisions are portable
+
+An interface should not be held hostage by the editor used to create it. A design should be exportable as readable data and usable from CSS, React, server-rendered pages, native webviews, documentation, and future platform adapters. This is why the contract starts with CSS custom properties and plain JavaScript data rather than a proprietary binary format.
+
+### 2. Components do not hide responsibility
+
+Convenience APIs are useful until they conceal important choices. Atelier primitives aim to make defaults safe but keep meaningful behavior explicit: a button is a button, a navigational link is a link, a form field has a label, and a modal owns focus only when it is truly modal. Future components will document ownership, focus, keyboard, ARIA, animation, and dismissal rules as behavior contracts.
+
+### 3. Local-first means more than offline marketing
+
+The core workflow should remain useful without a login or an always-on service. Atelier’s future Studio should save source-controlled artifacts locally, function without an account, and make cloud collaboration an optional layer. A user should be able to create a library, export its contract, inspect the result, and ship it through their own deployment pipeline.
+
+### 4. The visual surface is a development surface
+
+The Studio should not become a disconnected mockup machine. It is intended to expose the same constraints that product code observes: component state, responsive conditions, content length, semantic tokens, and accessibility metadata. A visual adjustment is valuable when it has a clear path to a source-level change.
+
+### 5. Accessibility is a product invariant
+
+Atelier will not represent decorative snapshots as production-ready UI. Every interactive primitive needs keyboard behavior, visible focus, correct semantics, and testable states. Accessibility should be observable in the Studio and enforceable in CI—not just stated in a README.
+
+## Studio behavior
+
+The current Studio is intentionally a transparent prototype rather than a fictional SaaS environment. Its controls work entirely in the browser:
+
+- **Accent color:** adjusts the document’s `--accent` CSS variable and records the change in the Studio’s session count.
+- **Density:** changes the preview’s scale to compare compact and spacious compositions.
+- **Device view:** switches the preview frame between desktop and mobile widths.
+- **Export JSON:** creates a local `atelier-workbench.tokens.json` download containing the active sample accent and session change count.
+- **Command palette:** provides in-document navigation and opens with `Ctrl/Cmd + K`.
+- **Theme:** changes only the current browser session; it does not write cookies, local storage, or telemetry.
+
+The Studio does not yet persist a real project or produce a complete component registry. That limitation is deliberate and visible. Persistence needs a defined project manifest, migration model, and conflict behavior before it is added.
+
+## Architecture
+
+```text
+                    ┌──────────────────────────┐
+                    │      Local Studio         │
+                    │  visual controls + export │
+                    └─────────────┬────────────┘
+                                  │
+                      portable design contract
+                                  │
+                  ┌───────────────┴────────────────┐
+                  │                                │
+        ┌─────────▼─────────┐            ┌─────────▼─────────┐
+        │ CSS variables     │            │ JavaScript tokens  │
+        │ any web surface   │            │ React / tooling    │
+        └─────────┬─────────┘            └─────────┬─────────┘
+                  │                                │
+                  └──────────────┬─────────────────┘
+                                 │
+                       ┌─────────▼─────────┐
+                       │ Product application │
+                       │ owns deployment     │
+                       └─────────────────────┘
+```
+
+### Why static first?
+
+The initial Studio is static by design. It lets the project prove an interaction model, visual direction, local run story, and package boundary without claiming that an account, CMS, backend, collaboration service, or visual-to-code compiler already exists. That is a more honest base for a real product than a polished screen full of nonfunctional controls.
+
+### Why a small package first?
+
+Design systems accumulate surface area quickly. Starting with foundational tokens and a few components makes the public contract easier to test and evolve. The package should grow only when individual components have a tested accessibility and API story, not because a category of components looks incomplete on a marketing page.
+
+## Roadmap
+
+The roadmap is organized by dependencies rather than marketing milestones.
+
+### Phase 1 — Contract foundation (current)
+
+- [x] Local Studio experience with working controls.
+- [x] CSS and JavaScript token contract.
+- [x] Initial React primitives with peer dependencies.
+- [x] Built-in test runner and parse checks.
+- [x] Clear local-only development path.
+- [ ] Package build pipeline and publish metadata review.
+- [ ] Versioned `atelier.config.json` manifest.
+
+### Phase 2 — Project-backed Studio
+
+- [ ] Tauri desktop shell targeting Windows first.
+- [ ] Workspace-local `atelier.config.json` project manifest.
+- [ ] SQLite-backed local project index with migrations.
+- [ ] Import/export validation using a schema at every filesystem boundary.
+- [ ] Undo/redo, named snapshots, and a human-readable change timeline.
+- [ ] Token collection and mode editing with real persistent state.
+- [ ] File watcher that detects source changes without overwriting user work.
+
+### Phase 3 — Component contracts
+
+- [ ] Dialog, popover, menu, tabs, select, tooltip, and disclosure primitives.
+- [ ] Keyboard, focus, pointer, touch, RTL, and screen-reader contract tests.
+- [ ] A recipe format for source-owned composed patterns.
+- [ ] Component metadata: dependencies, slots, states, design tokens, and compatibility.
+- [ ] Story-like sandbox pages generated from component contracts.
+- [ ] Accessibility audit command with actionable source locations.
+
+### Phase 4 — Source exchange
+
+- [ ] AST-backed component recipe generation with deterministic output.
+- [ ] Safe import graph analysis before any code modification.
+- [ ] Explicit dry-run and review mode for source insertion.
+- [ ] Framework adapters for React, then framework-agnostic web components where justified.
+- [ ] A registry protocol that works from local files before remote catalogs.
+- [ ] Package version migration assistant with no hidden file edits.
+
+### Phase 5 — Optional collaboration
+
+- [ ] Optional hosted sync adapter; local projects remain first-class.
+- [ ] Branch-aware Studio projects and mergeable token changes.
+- [ ] Design review links that require explicit user publishing.
+- [ ] Organization policy controls, audit events, and secrets-free diagnostics.
+- [ ] No client-clock trust for any server-enforced policy.
+
+## Security and privacy
+
+Atelier’s local model is a security and product decision, not a temporary omission.
+
+- The current Studio makes no network API requests after its assets load.
+- The development server binds only to loopback by default.
+- No analytics, telemetry, account flow, cookie banner, or hidden local persistence is included.
+- Export is a browser download initiated by an explicit user action.
+- The package has no postinstall hook and does not execute shell commands.
+- React remains a peer dependency to reduce dependency ambiguity and bundle duplication.
+- Future filesystem features must validate every path and reject traversal outside the selected workspace.
+- Future source-writing features must require an explicit preview and approval for each file change.
+- Secrets must remain in environment variables or OS-backed secure storage; no token may be embedded in Studio exports or package metadata.
+
+If you find a security concern, do not publish a proof-of-concept exploit or include sensitive data in an issue. Document reproduction at a high level and contact the project maintainer through a private, approved channel once one exists.
+
+## Accessibility baseline
+
+The Studio currently provides semantic navigation, native buttons, meaningful labels for controls, visible keyboard focus, a skip link, an ARIA-labeled preview switcher, an accessible modal dialog, a live status region for feedback, responsive layout, and a reduced-motion fallback.
+
+This is a baseline, not a certification. Manual keyboard and assistive-technology testing remains necessary as the Studio grows. The initial package’s `Button` uses native `<button>` semantics; more complex primitives will not be marked complete until they have state, focus, and keyboard tests.
+
+## Development conventions
+
+- Keep public APIs small, typed when a TypeScript build is introduced, and documented near their source.
+- Do not hide visual values inside JavaScript components when they should be tokens.
+- Keep side effects explicit. No component should silently write to storage or call a service.
+- Preserve user-owned source; code generation must be reviewable and deterministic.
+- Avoid dependencies unless they solve a verified problem better than a platform API or existing module.
+- Design responsive surfaces for content variability, not screenshots.
+- Never turn local-only functionality into account-gated functionality without a migration path.
+
+## Publishing and deployment
+
+This repository is intentionally local-only right now. No domain has been configured, no package has been published, and no hosting provider is required.
+
+When deployment is requested later, Netlify, Vercel, Cloudflare Pages, GitHub Pages, or another static host can serve `apps/studio` after an explicit build/deployment decision. Publishing `@magnexis/atelier` similarly requires a package audit, license confirmation, README/package metadata review, semantic version decision, and explicit user authorization. None of those external changes are performed by the current project.
+
+## Limitations
+
+- The Studio is a local interactive product preview, not a persistent design editor.
+- The package is an initial API surface, not yet a complete UI system.
+- The CSS uses current browser features such as `color-mix`; provide fallbacks before targeting older browsers.
+- The `Export JSON` artifact is a sample contract and not yet a validated project manifest.
+- Google Fonts are referenced for the visual preview. For a fully offline/distributable desktop build, bundle appropriately licensed local font files or use system font stacks.
+- There is no installer, release automation, registry, design-file import, or deployment integration yet.
+
+## License
+
+MIT. See the package metadata. Before publishing, add a top-level `LICENSE` file with the confirmed copyright holder and year.
+
+## Status
+
+Early foundation. Suitable for local inspection, UI direction, and further engineering; not yet suitable to describe as a drop-in replacement for a mature hosted builder or primitive ecosystem.
