@@ -2,7 +2,7 @@
 
 All notable project changes are documented here. This project follows Keep a Changelog style and intends to use semantic versioning once a public registry scope is reserved.
 
-## [Unreleased]
+## [1.0.0] - 2026-10-26
 
 ### Added
 
@@ -12,6 +12,7 @@ All notable project changes are documented here. This project follows Keep a Cha
 - Portable recipe metadata for local-state, settings, feedback, and commerce workflows.
 - Distribution guidance for GitHub, JSR, and a future npm compatibility mirror.
 - A public, read-only Streamable HTTP MCP endpoint at `/mcp` for catalog and release discovery.
+- First stable public release under the Magnexis organization.
 
 ### Changed
 

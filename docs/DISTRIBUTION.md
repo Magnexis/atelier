@@ -57,14 +57,12 @@ When the package reaches a stable public API, create an npm account, verify its 
 
 ## Install without any registry
 
-Until a registry release exists, developers can use the source package through Git or a workspace:
+Until a registry release exists, developers can use the source package through a local workspace clone:
 
-```json
-{
-  "dependencies": {
-    "@magnexis/atelier": "github:magnexis/atelier-ui#v0.1.0"
-  }
-}
+```bash
+git clone https://github.com/Magnexis/atelier.git
+cd atelier
+pnpm install
 ```
 
 This is not a substitute for a release process, but it is a real distribution path. It works best when release tags, package metadata, and source builds are stable. Consumers should pin tags or commit hashes rather than a mutable default branch.

@@ -2,7 +2,7 @@
   "name": "atelier-ui",
   "private": true,
   "type": "module",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "packageManager": "pnpm@10.0.0",
   "description": "A local-first design language and component runtime by Magnexis.",
   "homepage": "https://atelier-vite-preview-20261026.netlify.app",
