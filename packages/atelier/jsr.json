@@ -2,6 +2,9 @@
   "name": "@magnexis/atelier",
   "version": "1.0.0",
   "license": "MIT",
+  "imports": {
+    "react": "npm:react@^18.2.0"
+  },
   "exports": {
     ".": "./src/index.js",
     "./tokens": "./src/tokens.js"
