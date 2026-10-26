@@ -137,7 +137,7 @@ cd atelier
 pnpm install
 ```
 
-The stable package is available now as `jsr:@magnexis/atelier` (currently `1.1.1`). Neither distribution route requires an npm account.
+The stable package is available now as `jsr:@magnexis/atelier` (currently `1.1.2`). Neither distribution route requires an npm account.
 
 ```bash
 deno add jsr:@magnexis/atelier
@@ -382,7 +382,7 @@ This is a baseline, not a certification. Manual keyboard and assistive-technolog
 
 ## Publishing and deployment
 
-The Studio is publicly deployed at <https://atelier-vite-preview-20261026.netlify.app>; no custom domain is configured. The repository is hosted under the Magnexis organization at <https://github.com/Magnexis/atelier>. `@magnexis/atelier@1.1.1` is published on JSR through GitHub Actions OIDC with provenance.
+The Studio is publicly deployed at <https://atelier-vite-preview-20261026.netlify.app>; no custom domain is configured. The repository is hosted under the Magnexis organization at <https://github.com/Magnexis/atelier>. `@magnexis/atelier@1.1.2` is published on JSR through GitHub Actions OIDC with provenance.
 
 The Studio does not require Netlify or a domain for local use. Publishing a package remains a deliberate release action and requires a package audit, license confirmation, package metadata review, semantic version decision, and a GitHub release. The workflow uses JSR's OIDC integration rather than a stored registry token.
 

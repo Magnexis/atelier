@@ -4,6 +4,12 @@ All notable project changes are documented here. This project follows Keep a Cha
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-10-26
+
+### Improved
+
+- Added symbol-level JSDoc to the explicit declaration surface so the JSR reference is complete and editor hovers remain useful.
+
 ## [1.1.1] - 2026-10-26
 
 ### Improved

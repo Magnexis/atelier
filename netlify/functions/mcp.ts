@@ -13,7 +13,7 @@ const components = [
 ] as const;
 
 const release = {
-  version: "1.1.1",
+  version: "1.1.2",
   channel: "pre-release source package",
   notes: [
     "Introduces the local-first Vite Studio and token contract.",
