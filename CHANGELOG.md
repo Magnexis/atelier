@@ -4,6 +4,18 @@ All notable project changes are documented here. This project follows Keep a Cha
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-10-26
+
+### Improved
+
+- Attached explicit JSR type declarations to both JavaScript entrypoints, avoiding the registry's slow-type path while retaining the stable runtime implementation.
+- Added module documentation for the tokens entrypoint and expanded package-facing documentation.
+- Added a concise Studio navigation and adoption guide at `docs/GETTING-STARTED.md`.
+
+### Changed
+
+- Corrected public documentation to reflect the signed JSR package, GitHub release workflow, production Netlify address, and current product limitations.
+
 ### Fixed
 
 - Netlify now deploys a self-contained MCP function bundle, preventing runtime dependency resolution failures on the public `/mcp` route.

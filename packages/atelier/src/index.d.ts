@@ -1,3 +1,9 @@
+/**
+ * A small React component layer and portable design contract for Atelier.
+ * Use {@link tokens} for values that must work outside React.
+ *
+ * @module atelier
+ */
 export { tokenCss, tokens, type AtelierTokens } from "./tokens.js";
 
 export interface BaseProps {

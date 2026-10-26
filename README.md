@@ -8,6 +8,8 @@ Atelier is a new Magnexis project. It is deliberately not a clone of Framer, sha
 **Source:** <https://github.com/Magnexis/atelier>
 **JSR package:** <https://jsr.io/@magnexis/atelier>
 
+For a guided tour of the live Studio surfaces, see [Navigate Atelier](docs/GETTING-STARTED.md). The published Studio is the canonical visual reference for the release.
+
 The project currently includes a polished local Studio landing and workbench experience, a framework-light token package, a small React surface, local export behavior, and a deliberately simple static-server workflow. It does **not** claim to be a complete hosted page builder, component registry, Figma plugin, design-file format, or replacement for an established accessibility primitive library. Those are future systems, not marketing copy.
 
 ## Why Atelier exists
@@ -127,7 +129,7 @@ pnpm check
 
 ## Use the package in an application
 
-At launch, Atelier is intended to be consumed from source or JSR—not npm. Clone the repository when working from source:
+Atelier is consumed from source or JSR—not npm. Clone the repository when working from source:
 
 ```bash
 git clone https://github.com/Magnexis/atelier.git
@@ -135,7 +137,7 @@ cd atelier
 pnpm install
 ```
 
-The stable package is available now as `jsr:@magnexis/atelier` (currently `1.1.0`). Neither distribution route requires an npm account.
+The stable package is available now as `jsr:@magnexis/atelier` (currently `1.1.1`). Neither distribution route requires an npm account.
 
 ```bash
 deno add jsr:@magnexis/atelier
@@ -380,9 +382,9 @@ This is a baseline, not a certification. Manual keyboard and assistive-technolog
 
 ## Publishing and deployment
 
-The Studio has a deployed Netlify production URL, but no custom domain is configured. The repository is hosted under the Magnexis organization. `@magnexis/atelier@1.0.0` is published on JSR through GitHub Actions OIDC.
+The Studio is publicly deployed at <https://atelier-vite-preview-20261026.netlify.app>; no custom domain is configured. The repository is hosted under the Magnexis organization at <https://github.com/Magnexis/atelier>. `@magnexis/atelier@1.1.1` is published on JSR through GitHub Actions OIDC with provenance.
 
-The Studio does not require Netlify or a domain for local use. Publishing a package remains a deliberate release action and requires a package audit, license confirmation, package metadata review, semantic version decision, and an authenticated registry publisher.
+The Studio does not require Netlify or a domain for local use. Publishing a package remains a deliberate release action and requires a package audit, license confirmation, package metadata review, semantic version decision, and a GitHub release. The workflow uses JSR's OIDC integration rather than a stored registry token.
 
 ## Limitations
 
@@ -391,11 +393,11 @@ The Studio does not require Netlify or a domain for local use. Publishing a pack
 - The CSS uses current browser features such as `color-mix`; provide fallbacks before targeting older browsers.
 - The `Export JSON` artifact is a sample contract and not yet a validated project manifest.
 - Google Fonts are referenced for the visual preview. For a fully offline/distributable desktop build, bundle appropriately licensed local font files or use system font stacks.
-- There is no installer, release automation, registry, design-file import, or deployment integration yet.
+- There is no installer, custom domain, design-file import, or source-to-component generator yet.
 
 ## License
 
-MIT. See the package metadata. Before publishing, add a top-level `LICENSE` file with the confirmed copyright holder and year.
+MIT. See the package metadata and `packages/atelier/LICENSE`.
 
 ## Status
 

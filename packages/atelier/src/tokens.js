@@ -1,3 +1,10 @@
+/* @ts-self-types="./tokens.d.ts" */
+/**
+ * Foundational Atelier design tokens and a CSS custom-property serializer.
+ *
+ * @module atelier/tokens
+ */
+
 /** Stable token names designed for CSS-variable interop. */
 export const tokens = Object.freeze({
   color: Object.freeze({ canvas: "#f6f5f1", surface: "#ffffff", ink: "#1d1c1a", muted: "#74716c", line: "#dedbd5", accent: "#285de6", critical: "#c43931" }),
