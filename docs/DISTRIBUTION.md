@@ -57,7 +57,7 @@ When the package reaches a stable public API, create an npm account, verify its 
 
 ## Install without any registry
 
-Until a registry release exists, developers can use the source package through a local workspace clone:
+The stable package is available from JSR. Developers who need the Studio or source package can instead use a local workspace clone:
 
 ```bash
 git clone https://github.com/Magnexis/atelier.git

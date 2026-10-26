@@ -15,7 +15,7 @@ const components = [
 ];
 const code = {
   workspace: "# clone the source-owned workspace\ngit clone https://github.com/Magnexis/atelier.git\ncd atelier && pnpm install\n\n# then import from packages/atelier during development",
-  jsr: "# planned JSR package (after scope reservation)\ndeno add @magnexis/atelier\n\n# JSR publishes ESM source and generated docs",
+  jsr: "# published on JSR\ndeno add jsr:@magnexis/atelier\n\n# version 1.0.0 · built and signed by GitHub Actions",
   use: "import { SignalToggle, LedgerField } from '@magnexis/atelier';\n\nexport function SyncScope() {\n  return <SignalToggle leftLabel=\"Local\" rightLabel=\"Share\" />;\n}",
 };
 

@@ -131,7 +131,7 @@ cd atelier
 pnpm install
 ```
 
-When the public JSR package exists, the equivalent will be `jsr:@magnexis/atelier`. Neither distribution route requires an npm account.
+The stable package is available now as `jsr:@magnexis/atelier` (currently `1.0.0`). Neither distribution route requires an npm account.
 
 Import the global design contract once at your application root:
 
@@ -369,7 +369,7 @@ This is a baseline, not a certification. Manual keyboard and assistive-technolog
 
 ## Publishing and deployment
 
-The Studio has a deployed Netlify production URL, but no custom domain is configured. The repository is hosted under the Magnexis organization. JSR validation has passed locally; the registry release remains pending a verified `@magnexis` JSR publisher session.
+The Studio has a deployed Netlify production URL, but no custom domain is configured. The repository is hosted under the Magnexis organization. `@magnexis/atelier@1.0.0` is published on JSR through GitHub Actions OIDC.
 
 The Studio does not require Netlify or a domain for local use. Publishing a package remains a deliberate release action and requires a package audit, license confirmation, package metadata review, semantic version decision, and an authenticated registry publisher.
 
