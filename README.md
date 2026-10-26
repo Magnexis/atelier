@@ -94,7 +94,7 @@ The Studio is a real Vite + React application. It has a normal local development
 
 ## MCP discovery endpoint
 
-The deployed Studio includes a read-only Streamable HTTP MCP endpoint at `https://atelier-vite-preview-20261026.netlify.app/mcp`. It is intentionally limited to catalog and release discovery: `list_components`, `get_component`, and `get_release_notes`. It has no account data, write tools, user data, or secrets. The current Netlify visitor-access policy must be changed to **Public** before external MCP clients can reach it.
+The deployed Studio includes a public, read-only Streamable HTTP MCP endpoint at `https://atelier-vite-preview-20261026.netlify.app/mcp`. It is intentionally limited to catalog and release discovery: `list_components`, `get_component`, and `get_release_notes`. It has no account data, write tools, user data, or secrets.
 
 For a native MCP client, connect to `https://atelier-vite-preview-20261026.netlify.app/mcp` using Streamable HTTP. The endpoint accepts `POST` and returns JSON; it also supports browser preflight for public catalog tooling. The Netlify function rate-limits requests to 60 per minute per IP.
 

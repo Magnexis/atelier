@@ -4,3 +4,4 @@ dist/
 outputs/
 work/
 .netlify/
+netlify/functions-dist/

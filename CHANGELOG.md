@@ -2,6 +2,12 @@
 
 All notable project changes are documented here. This project follows Keep a Changelog style and intends to use semantic versioning once a public registry scope is reserved.
 
+## [Unreleased]
+
+### Fixed
+
+- Netlify now deploys a self-contained MCP function bundle, preventing runtime dependency resolution failures on the public `/mcp` route.
+
 ## [1.1.0] - 2026-10-26
 
 ### Added
